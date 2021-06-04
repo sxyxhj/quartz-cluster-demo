@@ -39,7 +39,7 @@
         </dependency>
 
 
-        <!--quartz 2.3.2-->
+        <!--quartz 2.3.0-->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>

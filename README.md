@@ -1,6 +1,6 @@
 Quartz Cluster Demo：
 
-基于Quartz 2.3.2
+基于Quartz 2.3.0
 
 DB Tables:
 
