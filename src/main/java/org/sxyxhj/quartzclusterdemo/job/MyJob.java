@@ -17,26 +17,9 @@ import java.util.ResourceBundle;
 
 public class MyJob implements Job {
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context) {
 
-        String jobName = context.getJobDetail().getKey().getName();
-        switch (jobName) {
-            /*每5s执行一次*/
-            case "quartz_test1":
-                System.err.println(getAddress() + " " + getDate() + "====>quartz_test1<====");
-                break;
-            /*每5s执行一次*/
-            case "quartz_test2":
-                System.err.println(getAddress() + " " + getDate() + "====>quartz_test2<====");
-                break;
-            /*每5s执行一次*/
-            case "quartz_test3":
-                System.err.println(getAddress() + " " + getDate() + "====>quartz_test3<====");
-                break;
-            default:
-                System.err.println(getAddress() + " " + getDate() + "====>other task<====");
-                break;
-        }
+        System.err.println(getAddress() + " " + getDate() + "====>"+context.getJobDetail().getKey().getName()+"<====");
 
     }
 

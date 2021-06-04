@@ -3,11 +3,13 @@ package org.sxyxhj.quartzclusterdemo.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.sxyxhj.quartzclusterdemo.component.JobSchedulerManager;
 import org.sxyxhj.quartzclusterdemo.entity.JobInfo;
+import org.sxyxhj.quartzclusterdemo.entity.JsonEntity;
 import org.sxyxhj.quartzclusterdemo.service.JobScheduleService;
 
 import java.util.List;
@@ -33,57 +35,82 @@ public class SchedulerController {
     //添加任务
     @PostMapping(value = "/add", produces = {"application/json"})
     @ApiOperation(value = "desc of method", notes = "")
-    public String addJob(JobInfo jobInfo) throws Exception {
+    public JsonEntity addJob(JobInfo jobInfo){
 
-        jobSchedulerManager.addJob(jobInfo.getJobName(), jobInfo.getJobGroup(), jobInfo.getCronExpression());
-        return "S";
+        boolean result = jobSchedulerManager.addJob(jobInfo.getJobName(), jobInfo.getJobGroup(), jobInfo.getCronExpression());
+
+        if(result){
+            return new JsonEntity(HttpStatus.OK.value(),"");
+        }else{
+            return new JsonEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(),"Add job failed");
+        }
     }
     //暂停任务
     @PostMapping(value = "/pause", produces = {"application/json"})
     @ApiOperation(value = "desc of method", notes = "")
-    public String pauseJob(JobInfo jobInfo) throws Exception {
+    public JsonEntity pauseJob(JobInfo jobInfo) {
 
-        jobSchedulerManager.pauseJob(jobInfo.getJobName(), jobInfo.getJobGroup());
-        return "S";
+        boolean result = jobSchedulerManager.pauseJob(jobInfo.getJobName(), jobInfo.getJobGroup());
+        if(result){
+            return new JsonEntity(HttpStatus.OK.value(),"");
+        }else{
+            return new JsonEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(),"Pause job failed");
+        }
     }
     //重启调度任务
     @PostMapping(value = "/resume", produces = {"application/json"})
     @ApiOperation(value = "desc of method", notes = "")
-    public String resumeJob(JobInfo jobInfo) throws Exception {
+    public JsonEntity resumeJob(JobInfo jobInfo) {
 
-        jobSchedulerManager.resumeJob(jobInfo.getJobName(), jobInfo.getJobGroup());
-        return "S";
+        boolean result = jobSchedulerManager.resumeJob(jobInfo.getJobName(), jobInfo.getJobGroup());
+        if(result){
+            return new JsonEntity(HttpStatus.OK.value(),"");
+        }else{
+            return new JsonEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(),"Resume job failed");
+        }
     }
     //修改任务
     @PostMapping(value = "/reschedule", produces = {"application/json"})
     @ApiOperation(value = "desc of method", notes = "")
-    public String rescheduleJob(JobInfo jobInfo) throws Exception {
+    public JsonEntity rescheduleJob(JobInfo jobInfo){
 
-        jobSchedulerManager.rescheduleJob(jobInfo.getJobName(), jobInfo.getJobGroup(), jobInfo.getCronExpression());
-        return "S";
+        boolean result = jobSchedulerManager.rescheduleJob(jobInfo.getJobName(), jobInfo.getJobGroup(), jobInfo.getCronExpression());
+        if(result){
+            return new JsonEntity(HttpStatus.OK.value(),"");
+        }else{
+            return new JsonEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(),"Reschedule job failed");
+        }
     }
     //删除任务
     @PostMapping(value = "/delete", produces = {"application/json"})
     @ApiOperation(value = "desc of method", notes = "")
-    public String deleteJob(JobInfo jobInfo) throws Exception {
+    public JsonEntity deleteJob(JobInfo jobInfo) {
 
-        jobSchedulerManager.deleteJob(jobInfo.getJobName(), jobInfo.getJobGroup());
-        return "S";
+        boolean result = jobSchedulerManager.deleteJob(jobInfo.getJobName(), jobInfo.getJobGroup());
+        if(result){
+            return new JsonEntity(HttpStatus.OK.value(),"");
+        }else{
+            return new JsonEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(),"Delete job failed");
+        }
     }
 
 
     //立即触发任务
     @PostMapping(value = "/trigger", produces = {"application/json"})
     @ApiOperation(value = "desc of method", notes = "")
-    public String triggerJob(JobInfo jobInfo) throws Exception {
+    public JsonEntity triggerJob(JobInfo jobInfo) {
 
-        jobSchedulerManager.triggerJob(jobInfo.getJobName(), jobInfo.getJobGroup());
-        return "S";
+        boolean result = jobSchedulerManager.triggerJob(jobInfo.getJobName(), jobInfo.getJobGroup());
+        if(result){
+            return new JsonEntity(HttpStatus.OK.value(),"");
+        }else{
+            return new JsonEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(),"Trigger job failed");
+        }
     }
     //调度任务查询
     @GetMapping(value = "/all", produces = {"application/json"})
     @ApiOperation(value = "desc of method", notes = "")
-    public  List<JobInfo> getAllJob() throws Exception {
+    public List<JobInfo> getAllJob() {
 
         List<JobInfo> list = jobScheduleService.getJobAndTriggerDetails();
 
